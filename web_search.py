@@ -1,4 +1,3 @@
-
 import os
 from dotenv import load_dotenv
 from google import genai
@@ -15,7 +14,6 @@ if not api_key:
 
 client = genai.Client(api_key=api_key)
 
-
 def search_web(question):
     with DDGS() as ddgs:
         results = list(
@@ -28,7 +26,6 @@ def search_web(question):
         )
 
     return results
-
 
 def ask_question(question):
     results = search_web(question)
@@ -46,6 +43,7 @@ def ask_question(question):
             f"CONTENT: {result.get('body', '')}\n"
             "-----------------------------\n"
         )
+
 
     prompt = f"""
 You are a web question-answering assistant.
@@ -67,10 +65,8 @@ RULES:
 5. If the answer is not found in the search results, respond with:
 "Sorry, I could not find an answer to your question in the provided web search results."
 
-
 Answer:
 """
-
     response = client.models.generate_content(
         model="gemini-3.5-flash-lite",
         contents=prompt
